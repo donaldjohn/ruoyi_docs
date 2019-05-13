@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.system.files.mapper.PlayOrderMapper">
+    
+    <resultMap type="PlayOrder" id="OrderResult">
+        <result property="id"    column="id"    />
+        <result property="fileName"    column="fileName"    />
+        <result property="type"    column="type"    />
+        <result property="ur"    column="ur"    />
+        <result property="content"    column="content"    />
+        <result property="order"    column="order"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+	
+	<sql id="selectOrderVo">
+        select id, fileName, `type`, ur, content, `order`, remark from play_order
+    </sql>
+	
+    <select id="selectOrderList" parameterType="PlayOrder" resultMap="OrderResult">
+        <include refid="selectOrderVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="fileName != null  and fileName != '' "> and fileName = #{fileName}</if>
+             <if test="type != null "> and type = #{type}</if>
+             <if test="ur != null  and ur != '' "> and ur = #{ur}</if>
+             <if test="content != null  and content != '' "> and content = #{content}</if>
+             <if test="order != null "> and order = #{order}</if>
+             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+         </where>
+    </select>
+    
+    <select id="selectOrderById" parameterType="Long" resultMap="OrderResult">
+        <include refid="selectOrderVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertOrder" parameterType="PlayOrder">
+        insert into play_order
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="fileName != null  and fileName != ''  ">fileName,</if>
+			<if test="type != null  ">type,</if>
+			<if test="ur != null  and ur != ''  ">ur,</if>
+			<if test="content != null  and content != ''  ">content,</if>
+			<if test="order != null  ">order,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="fileName != null  and fileName != ''  ">#{fileName},</if>
+			<if test="type != null  ">#{type},</if>
+			<if test="ur != null  and ur != ''  ">#{ur},</if>
+			<if test="content != null  and content != ''  ">#{content},</if>
+			<if test="order != null  ">#{order},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateOrder" parameterType="PlayOrder">
+        update play_order
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fileName != null  and fileName != ''  ">fileName = #{fileName},</if>
+            <if test="type != null  ">type = #{type},</if>
+            <if test="ur != null  and ur != ''  ">ur = #{ur},</if>
+            <if test="content != null  and content != ''  ">content = #{content},</if>
+            <if test="order != null  ">order = #{order},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteOrderById" parameterType="Long">
+        delete from play_order where id = #{id}
+    </delete>
+	
+    <delete id="deleteOrderByIds" parameterType="String">
+        delete from play_order where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
