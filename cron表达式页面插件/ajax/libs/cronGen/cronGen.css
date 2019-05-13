@@ -1,0 +1,20 @@
+﻿.line {
+	height: 25px;
+	line-height: 20px;
+	margin: 3px;
+}
+.line input{
+	margin: 4px 4px 0;
+}
+.imp {
+	padding-left: 25px;
+}
+.imp span{
+    margin-left: 4px;
+}
+.popover{
+	left:-436px !important;
+}
+.arrow{
+	left: 88.55% !important;
+}
